@@ -2,7 +2,7 @@
 
 require_once '../vendor/autoload.php';
 require_once '../config/eloquent.php';
-$categoryArray = array('political'=>'political events in the country and the world ','show business'=>'life of show business ','weather'=>'everything about the weather ','sports'=>'about sports and athletes ');
+$categoryArray = array('main mews' => 'main', 'political' => 'political events in the country and the world ', 'show business' => 'life of show business ', 'weather' => 'everything about the weather ', 'sports' => 'about sports and athletes ');
 $postsArray = array("
 What is Linux?
 
@@ -26,7 +26,7 @@ Documentation
 
 Installing the kernel source
 
-        If you install the full sources, put the kernel tarball in a directory where you have permissions (e.g. your home directory) and unpack it:","Replace “X” with the version number of the latest kernel.
+        If you install the full sources, put the kernel tarball in a directory where you have permissions (e.g. your home directory) and unpack it:", "Replace “X” with the version number of the latest kernel.
 
 Do NOT use the /usr/src/linux area! This area has a (usually incomplete) set of kernel headers that are used by the library header files. They should match the library, and not get messed up by whatever the kernel-du-jour happens to be.
 
@@ -38,7 +38,7 @@ Replace “x” for all versions bigger than the version “x” of your current
 
 Unlike patches for the 5.x kernels, patches for the 5.x.y kernels (also known as the -stable kernels) are not incremental but instead apply directly to the base 5.x kernel. For example, if your base kernel is 5.0 and you want to apply the 5.0.3 patch, you must not first apply the 5.0.1 and 5.0.2 patches. Similarly, if you are running kernel version 5.0.2 and want to jump to 5.0.3, you must first reverse the 5.0.2 patch (that is, patch -R) before applying the 5.0.3 patch. You can read more on this in Applying Patches To The Linux Kernel.
 
-Alternatively, the script patch-kernel can be used to automate this process. It determines the current kernel version and applies any patches found:","HiSilicon SoC uncore PMU driver
+Alternatively, the script patch-kernel can be used to automate this process. It determines the current kernel version and applies any patches found:", "HiSilicon SoC uncore PMU driver
 
 Each device PMU has separate registers for event counting, control and interrupt, and the PMU driver shall register perf PMU drivers like L3C, HHA and DDRC etc. The available events and configuration options shall be described in the sysfs, see:
 
@@ -50,7 +50,7 @@ e.g. hisi_sccl3_l3c0/rd_hit_cpipe is READ_HIT_CPIPE event of L3C index #0 in SCC
 
 e.g. hisi_sccl1_hha0/rx_operations is RX_OPERATIONS event of HHA index #0 in SCCL ID #1.
 
-The driver also provides a “cpumask” sysfs attribute, which shows the CPU core ID used to count the uncore PMU event.","ARM DynamIQ Shared Unit integrates one or more cores with an L3 memory system, control logic and external interfaces to form a multicore cluster. The PMU allows counting the various events related to the L3 cache, Snoop Control Unit etc, using 32bit independent counters. It also provides a 64bit cycle counter.
+The driver also provides a “cpumask” sysfs attribute, which shows the CPU core ID used to count the uncore PMU event.", "ARM DynamIQ Shared Unit integrates one or more cores with an L3 memory system, control logic and external interfaces to form a multicore cluster. The PMU allows counting the various events related to the L3 cache, Snoop Control Unit etc, using 32bit independent counters. It also provides a 64bit cycle counter.
 
 The PMU can only be accessed via CPU system registers and are common to the cores connected to the same DSU. Like most of the other uncore PMUs, DSU PMU doesn’t support process specific events and cannot be used in sampling mode.
 
@@ -62,7 +62,7 @@ The user should refer to the TRM of the product to figure out the supported even
 
 The driver also exposes the CPUs connected to the DSU instance in “associated_cpus”.
 
-e.g usage:","
+e.g usage:", "
 Introduction
 Terminology
 
@@ -76,7 +76,7 @@ cgroup is largely composed of two parts - the core and controllers. cgroup core 
 cgroups form a tree structure and every process in the system belongs to one and only one cgroup. All threads of a process belong to the same cgroup. On creation, all processes are put in the cgroup that the parent process belongs to at the time. A process can be migrated to another cgroup. Migration of a process doesn’t affect already existing descendant processes.
 
 Following certain structural constraints, controllers may be enabled or disabled selectively on a cgroup. All controller behaviors are hierarchical - if a controller is enabled on a cgroup, it affects all processes which belong to the cgroups consisting the inclusive sub-hierarchy of the cgroup. When a controller is enabled on a nested cgroup, it always restricts the resource distribution further. The restrictions set closer to the root in the hierarchy can not be overridden from further away.
-","Mounting
+", "Mounting
 
 Unlike v1, cgroup v2 has only single hierarchy. The cgroup v2 hierarchy can be mounted with the following mount command:
 
@@ -92,7 +92,7 @@ During transition to v2, system management software might still automount the v1
 
 cgroup v2 currently supports the following mount options.
 
-    nsdelegate","
+    nsdelegate", "
         Consider cgroup namespaces as delegation boundaries. This option is system wide and can only be set on mount or modified through remount from the init namespace. The mount option is ignored on non-init namespace mounts. Please refer to the Delegation section for details.
 
     memory_localevents
@@ -106,13 +106,13 @@ cgroup v2 currently supports the following mount options.
 Organizing Processes and Threads
 Processes
 
-Initially, only the root cgroup exists to which all processes belong. A child cgroup can be created by creating a sub-directory:","A given cgroup may have multiple child cgroups forming a tree structure. Each cgroup has a read-writable interface file “cgroup.procs”. When read, it lists the PIDs of all processes which belong to the cgroup one-per-line. The PIDs are not ordered and the same PID may show up more than once if the process got moved to another cgroup and then back or the PID got recycled while reading.
+Initially, only the root cgroup exists to which all processes belong. A child cgroup can be created by creating a sub-directory:", "A given cgroup may have multiple child cgroups forming a tree structure. Each cgroup has a read-writable interface file “cgroup.procs”. When read, it lists the PIDs of all processes which belong to the cgroup one-per-line. The PIDs are not ordered and the same PID may show up more than once if the process got moved to another cgroup and then back or the PID got recycled while reading.
 
 A process can be migrated into a cgroup by writing its PID to the target cgroup’s “cgroup.procs” file. Only one process can be migrated on a single write(2) call. If a process is composed of multiple threads, writing the PID of any thread migrates all threads of the process.
 
 When a process forks a child process, the new process is born into the cgroup that the forking process belongs to at the time of the operation. After exit, a process stays associated with the cgroup that it belonged to at the time of exit until it’s reaped; however, a zombie process does not appear in “cgroup.procs” and thus can’t be moved to another cgroup.
 
-A cgroup which doesn’t have any children or live processes can be destroyed by removing the directory. Note that a cgroup which doesn’t have any children and is associated only with zombie processes is considered empty and can be removed:","Threads
+A cgroup which doesn’t have any children or live processes can be destroyed by removing the directory. Note that a cgroup which doesn’t have any children and is associated only with zombie processes is considered empty and can be removed:", "Threads
 
 cgroup v2 supports thread granularity for a subset of controllers to support use cases requiring hierarchical resource distribution across the threads of a group of processes. By default, all threads of a process belong to the same cgroup, which also serves as the resource domain to host resource consumptions which are not specific to a process or thread. The thread mode allows threads to be spread across a subtree while still maintaining the common resource domain for them.
 
@@ -126,7 +126,7 @@ As the threaded domain cgroup hosts all the domain resource consumptions of the 
 
 The current operation mode or type of the cgroup is shown in the “cgroup.type” file which indicates whether the cgroup is a normal domain, a domain which is serving as the domain of a threaded subtree, or a threaded cgroup.
 
-On creation, a cgroup is always a domain cgroup and can be made threaded by writing “threaded” to the “cgroup.type” file. The operation is single direction:","Control Groupstats is inspired by the discussion at http://lkml.org/lkml/2007/4/11/187 and implements per cgroup statistics as suggested by Andrew Morton in http://lkml.org/lkml/2007/4/11/263.
+On creation, a cgroup is always a domain cgroup and can be made threaded by writing “threaded” to the “cgroup.type” file. The operation is single direction:", "Control Groupstats is inspired by the discussion at http://lkml.org/lkml/2007/4/11/187 and implements per cgroup statistics as suggested by Andrew Morton in http://lkml.org/lkml/2007/4/11/263.
 
 Per cgroup statistics infrastructure re-uses code from the taskstats interface. A new set of cgroup operations are registered with commands and attributes specific to cgroups. It should be very easy to extend per cgroup statistics, by adding members to the cgroupstats structure.
 
@@ -134,7 +134,7 @@ The current model for cgroupstats is a pull, a push model (to post statistics on
 
 NOTE: We currently rely on delay accounting for extracting information about tasks blocked on I/O. If CONFIG_TASK_DELAY_ACCT is disabled, this information will not be available.
 
-To extract cgroup statistics a utility very similar to getdelays.c has been developed, the sample output of the utility is shown below:","
+To extract cgroup statistics a utility very similar to getdelays.c has been developed, the sample output of the utility is shown below:", "
 Resource management
 
     Since creation and destruction of all IB resources is done by commands passed through a file descriptor, the kernel can keep track of which resources are attached to a given userspace context. The ib_uverbs module maintains idr tables that are used to translate between kernel pointers and opaque userspace handles, so that kernel pointers are never exposed to userspace and userspace cannot trick the kernel into following a bogus pointer.
@@ -148,79 +148,91 @@ Memory pinning
     Pages that are pinned multiple times are counted each time they are pinned, so the value of pinned_vm may be an overestimate of the number of pages pinned by a process.
 
 ");
-$tag_array=array('actual'=>'about all','incidents'=>'what happens','disasters'=>'global disasters ','progress'=>'about progress','the science'=>'science achievements','war'=>'conflicts','children'=>'about our children','animals'=>"human's best friends",'finance'=>'big money','entertainment'=>'for fan' );
+$tag_array = array('actual' => 'about all', 'incidents' => 'what happens', 'disasters' => 'global disasters ', 'progress' => 'about progress', 'the science' => 'science achievements', 'war' => 'conflicts', 'children' => 'about our children', 'animals' => "human's best friends", 'finance' => 'big money', 'entertainment' => 'for fan');
 
+//1. Создать 5 категорий (insert) + категория uncategories  с id=0 для работы логики с удалением категорий.
 
-
-foreach ($categoryArray as $key=>$value)
-{
+foreach ($categoryArray as $key => $value) {
 
     $category1 = new \Hillel\Model\category;
-    $category1->title="$key";
-    $category1->slug="$value";
-    var_dump($category1);
+    $category1->title = "$key";
+    $category1->slug = "$value";
     $category1->save();
 
-
 }
 
-$category= \Hillel\Model\category::find(5);
-$category->title='bla bla bla';
-$category->slug="about blablabla";
+//2. Изменить 1 категорию (update)
+//3. Удалить 1 категорию (delete).
+
+
+$category = \Hillel\Model\category::find(1);
+$category->title = 'bla bla bla';
+$category->slug = "about blablabla";
 $category->save();
-//echo "bla bla bla";
-//$category->delete();
+$category->delete();
+
+//вернем ее обратно чтоб не нарушать логику
+$category = new \Hillel\Model\category;
+$category->id = 1;
+$category->title = 'bla bla bla';
+$category->slug = "about blablabla";
+$category->save();
 
 
-foreach ($postsArray as $value)
-{
+//4. Создать 10 постов, прикрепив случайную категорию.
+foreach ($postsArray as $value) {
 
-    $post=new \Hillel\Model\post;
-    $post->title = "title #".rand(1,28);
-    $post->slug= "some slug #".rand(12,44);
-    $post->body= $value;
-    $post->category_id=rand(1,5);
+    $post = new \Hillel\Model\post;
+    $post->title = "title #" . rand(1, 28);
+    $post->slug = "some slug #" . rand(12, 44);
+    $post->body = $value;
+    $post->category_id = rand(1, 5);
     $post->save();
 }
+//5. Обновить 1 пост, заменив поля + категорию.
+//6. Удалить пост.
 
-$post1=\Hillel\Model\post::find(4);
-$post1->title="bla bla bla again";
-$post1->slug="blablablablablabla";
-$post1->body=",blablablablablabla,blablablablablabla,blablablablablablablablablablablabla,blablablablablabla,blablablablablablablablablablablabla,
+$post1 = \Hillel\Model\post::find(6);
+$post1->title = "bla bla bla again";
+$post1->slug = "blablablablablabla";
+$post1->body = ",blablablablablabla,blablablablablabla,blablablablablablablablablablablabla,blablablablablabla,blablablablablablablablablablablabla,
 blablablablablabla,blablablablablablablablablablablabla,blablablablablabla,blablablablablabla";
-$post1->category_id=3;
+$post1->category_id = 4;
 $post1->save();
 $post1->delete();
 
+//вернем его обратно чтоб логику ...
+$post1 = new \Hillel\Model\post;
+$post1->id = 6;
+$post1->title = "bla bla bla again";
+$post1->slug = "blablablablablabla";
+$post1->body = ",blablablablablabla,blablablablablabla,blablablablablablablablablablablabla,blablablablablabla,blablablablablablablablablablablabla,
+blablablablablabla,blablablablablablablablablablablabla,blablablablablabla,blablablablablabla";
+$post1->category_id = 4;
+$post1->save();
 
+//7. Создать 10 тегов
 
-$cat = \Hillel\Model\category::find(2);
-$posts = $cat->posts;
-   foreach ($posts as $post ){
-    echo "<h1>".$post->title."</h1>";
-    echo "<h3>".$post->slug."</h3>";
-    echo $post->body."<br>";
-
-}
-
-
-
-foreach ($tag_array as $key=>$value) {
+foreach ($tag_array as $key => $value) {
     $tag = new \Hillel\Model\tag;
     $tag->title = $key;
-    $tag->slug  = $value;
+    $tag->slug = $value;
     $tag->save();
 
 
 }
 
+////8. Каждому уже сохранённому посту прикрепить по 3 случайных тега.
 
-
-for($i=1;$i<=10;$i++)
-{
+for ($i = 1; $i <= 10; $i++) {
     $post = \Hillel\Model\post::find($i);
     $post->tags()->attach([rand(1, 10), rand(1, 10), rand(1, 10)]);
 }
 
-
+//Удаление тега
+$tag = \Hillel\Model\tag::find(4);
+$tag->delete();
+//попытка удаления специальной категории
+$cat = \Hillel\Model\category::find(0);
+$cat->delete();
 
