@@ -154,7 +154,7 @@ $tag_array = array('actual' => 'about all', 'incidents' => 'what happens', 'disa
 
 foreach ($categoryArray as $key => $value) {
 
-    $category1 = new \Hillel\Model\category;
+    $category1 = new \Hillel\Model\Category;
     $category1->title = "$key";
     $category1->slug = "$value";
     $category1->save();
@@ -165,14 +165,14 @@ foreach ($categoryArray as $key => $value) {
 //3. Удалить 1 категорию (delete).
 
 
-$category = \Hillel\Model\category::find(1);
+$category = \Hillel\Model\Category::find(1);
 $category->title = 'bla bla bla';
 $category->slug = "about blablabla";
 $category->save();
 $category->delete();
 
 //вернем ее обратно чтоб не нарушать логику
-$category = new \Hillel\Model\category;
+$category = new \Hillel\Model\Category;
 $category->id = 1;
 $category->title = 'bla bla bla';
 $category->slug = "about blablabla";
@@ -180,41 +180,47 @@ $category->save();
 
 
 //4. Создать 10 постов, прикрепив случайную категорию.
+$categories = \Hillel\Model\Category::where('id','>',0)->get();;
+foreach ($categories as $category )
+{$cat_id_arr[]=$category->id;}
+
 foreach ($postsArray as $value) {
 
-    $post = new \Hillel\Model\post;
+    $post = new \Hillel\Model\Post;
     $post->title = "title #" . rand(1, 28);
     $post->slug = "some slug #" . rand(12, 44);
     $post->body = $value;
-    $post->category_id = rand(1, 5);
+    //var_dump($category);
+        $post->category_id = $cat_id_arr[array_rand($cat_id_arr,1)];
     $post->save();
 }
+
 //5. Обновить 1 пост, заменив поля + категорию.
 //6. Удалить пост.
 
-$post1 = \Hillel\Model\post::find(6);
+$post1 = \Hillel\Model\Post::find(3);
 $post1->title = "bla bla bla again";
 $post1->slug = "blablablablablabla";
 $post1->body = ",blablablablablabla,blablablablablabla,blablablablablablablablablablablabla,blablablablablabla,blablablablablablablablablablablabla,
 blablablablablabla,blablablablablablablablablablablabla,blablablablablabla,blablablablablabla";
-$post1->category_id = 4;
+$post1->category_id = $cat_id_arr[array_rand($cat_id_arr,1)];
 $post1->save();
 $post1->delete();
 
 //вернем его обратно чтоб логику ...
-$post1 = new \Hillel\Model\post;
-$post1->id = 6;
+$post1 = new \Hillel\Model\Post;
+$post1->id = 3;
 $post1->title = "bla bla bla again";
 $post1->slug = "blablablablablabla";
 $post1->body = ",blablablablablabla,blablablablablabla,blablablablablablablablablablablabla,blablablablablabla,blablablablablablablablablablablabla,
 blablablablablabla,blablablablablablablablablablablabla,blablablablablabla,blablablablablabla";
-$post1->category_id = 4;
+$post1->category_id = $cat_id_arr[array_rand($cat_id_arr,1)];
 $post1->save();
 
 //7. Создать 10 тегов
 
 foreach ($tag_array as $key => $value) {
-    $tag = new \Hillel\Model\tag;
+    $tag = new \Hillel\Model\Tag;
     $tag->title = $key;
     $tag->slug = $value;
     $tag->save();
@@ -223,16 +229,24 @@ foreach ($tag_array as $key => $value) {
 }
 
 ////8. Каждому уже сохранённому посту прикрепить по 3 случайных тега.
+$tags = \Hillel\Model\Tag::where('id','>',0)->get();
+foreach ($tags as $tag)
+{
+    $tags_id_arr[] = $tag->id;
+}
 
-for ($i = 1; $i <= 10; $i++) {
-    $post = \Hillel\Model\post::find($i);
-    $post->tags()->attach([rand(1, 10), rand(1, 10), rand(1, 10)]);
+$posts = \Hillel\Model\Post::where('id','>',0)->get();
+foreach ($posts as $post)
+{
+
+         $post->tags()->attach([$tags_id_arr[array_rand($tags_id_arr,1)],$tags_id_arr[array_rand($tags_id_arr,1)],$tags_id_arr[array_rand($tags_id_arr,1)]]);
+         //$post->save();
 }
 
 //Удаление тега
-$tag = \Hillel\Model\tag::find(4);
+$tag = \Hillel\Model\Tag::find($tags_id_arr[array_rand($tags_id_arr,1)]);
 $tag->delete();
 //попытка удаления специальной категории
-$cat = \Hillel\Model\category::find(0);
+$cat = \Hillel\Model\Category::find(0);
 $cat->delete();
 

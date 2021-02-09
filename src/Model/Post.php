@@ -6,7 +6,7 @@ namespace Hillel\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class post extends Model
+class Post extends Model
 {
     public function category()
     {
